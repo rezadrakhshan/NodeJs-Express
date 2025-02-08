@@ -6,6 +6,7 @@
     "start": "set DEBUG=app:main && nodemon index.js"
   },
   "keywords": [],
+  "type": "module",
   "author": "",
   "license": "ISC",
   "description": "",

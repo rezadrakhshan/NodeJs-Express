@@ -1,6 +1,8 @@
 import parentController from "../controller.js";
 import _ from "lodash";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import c from "config";
 
 export default new (class extends parentController {
   async register(req, res) {
@@ -23,6 +25,27 @@ export default new (class extends parentController {
     });
   }
   async login(req, res) {
-    this.response({ res, message: "login" });
+    const user = await this.User.findOne({ email: req.body.email });
+    if (!user) {
+      return this.response({
+        res,
+        message: "invalid email or password",
+        code: 400,
+      });
+    }
+    const isValid = await bcrypt.compare(req.body.password, user.password);
+    if (!isValid) {
+      return this.response({
+        res,
+        message: "invalid email or password",
+        code: 400,
+      });
+    }
+    const token = jwt.sign({ _id: user.id }, c.get("jwt_secret"));
+    return this.response({
+      res,
+      message: "Successfully logged in.",
+      data: token,
+    });
   }
 })();

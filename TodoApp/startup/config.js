@@ -1,8 +1,8 @@
 import helmet from "helmet";
 
-export default function (app, e) {
+export default function (app, express) {
   app.use(helmet());
-  app.use(e.json());
-  app.use(e.urlencoded({ extended: true }));
-  app.use(e.static("public"));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.static("public"));
 }

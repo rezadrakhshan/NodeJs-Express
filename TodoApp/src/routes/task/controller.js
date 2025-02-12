@@ -20,11 +20,18 @@ export default new (class extends parentController {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return this.response({ res, message: "invalid id", code: 400 });
     }
-    const task = await this.Task.findByIdAndUpdate(req.params.id, {
+    await this.Task.findByIdAndUpdate(req.params.id, {
       $set: {
         isCompleted: req.body.status,
       },
     });
     return this.response({ res, message: "Task Updated" });
+  }
+  async removeTask(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return this.response({ res, message: "invalid id", code: 400 });
+    }
+    await this.Task.findByIdAndDelete(req.params.id);
+    return this.response({ res, message: "task removed" });
   }
 })();

@@ -17,5 +17,6 @@ router.put(
   controller.validate,
   controller.updateTask
 );
+router.delete("/:id", controller.removeTask);
 
 export default router;

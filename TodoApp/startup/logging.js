@@ -1,7 +1,7 @@
 import winston from "winston";
 import debug from "debug";
-
 const log = debug("app:main");
+
 
 export default function () {
   winston.add(new winston.transports.File({ filename: "errors.log" }));
@@ -9,11 +9,9 @@ export default function () {
   process.on("uncaughtException", (ex) => {
     log(ex);
     winston.error(ex.message, ex);
-    process.exit(1);
   });
   process.on("unhandledRejection", (ex) => {
     log(ex);
     winston.error(ex.message, ex);
-    process.exit(1);
   });
 }

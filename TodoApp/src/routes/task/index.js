@@ -4,6 +4,12 @@ import validator from "./validator.js";
 
 const router = e.Router();
 
-router.get("/", controller.getTask);
+router.post(
+  "/",
+  validator.createTaskValidator(),
+  controller.validate,
+  controller.createTask
+);
+router.get("/", controller.getUserTasks);
 
 export default router;

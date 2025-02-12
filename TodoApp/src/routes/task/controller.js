@@ -1,5 +1,6 @@
 import parentController from "../controller.js";
 import _ from "lodash";
+import mongoose from "mongoose";
 
 export default new (class extends parentController {
   async createTask(req, res) {
@@ -14,5 +15,16 @@ export default new (class extends parentController {
   async getUserTasks(req, res) {
     const tasks = await this.Task.find({ user: req.user });
     return this.response({ res, message: "all tasks is here", data: tasks });
+  }
+  async updateTask(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return this.response({ res, message: "invalid id", code: 400 });
+    }
+    const task = await this.Task.findByIdAndUpdate(req.params.id, {
+      $set: {
+        isCompleted: req.body.status,
+      },
+    });
+    return this.response({ res, message: "Task Updated" });
   }
 })();

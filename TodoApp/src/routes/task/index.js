@@ -11,5 +11,11 @@ router.post(
   controller.createTask
 );
 router.get("/", controller.getUserTasks);
+router.put(
+  "/:id",
+  validator.updateTask(),
+  controller.validate,
+  controller.updateTask
+);
 
 export default router;

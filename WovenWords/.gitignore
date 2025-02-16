@@ -14,6 +14,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 config/
 errors.log
 
+public/blog
+
 # Runtime data
 pids
 *.pid

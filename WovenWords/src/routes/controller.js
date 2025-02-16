@@ -1,11 +1,13 @@
 import autoBind from "auto-bind";
 import { validationResult } from "express-validator";
 import User from "../models/user.js";
+import Blog from "../models/blog.js";
 
 export default class {
   constructor() {
     autoBind(this);
     this.User = User;
+    this.Blog = Blog;
   }
   validationBody(req, res) {
     const result = validationResult(req);

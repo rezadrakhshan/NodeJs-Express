@@ -13,4 +13,6 @@ router.post(
   controller.createBlog
 );
 
+router.delete("/:id", controller.removeBlog);
+
 export default router;

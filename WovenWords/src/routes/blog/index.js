@@ -17,4 +17,12 @@ router.get("/", controller.getAllBlog);
 router.get("/:id", controller.getSingleBlog);
 router.delete("/:id", controller.removeBlog);
 
+router.put(
+  "/:id",
+  upload.single("image"),
+  validator.updateBlogValidator(),
+  controller.validate,
+  controller.updateBlog
+);
+
 export default router;

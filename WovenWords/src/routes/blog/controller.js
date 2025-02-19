@@ -36,4 +36,18 @@ export default new (class extends parentController {
     }
     return this.response({ res, message: "Blog removed successfully" });
   }
+  async getAllBlog(req, res) {
+    const blog = await this.Blog.find({ userId: req.user.id });
+    this.response({ res, data: blog });
+  }
+  async getSingleBlog(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return this.response({ res, message: "Inavlid ID", code: 400 });
+    }
+    const blog = await this.Blog.findById(req.params.id);
+    if (!blog) {
+      return this.response({ res, message: "Blog not found", code: 404 });
+    }
+    this.response({ res, data: blog });
+  }
 })();

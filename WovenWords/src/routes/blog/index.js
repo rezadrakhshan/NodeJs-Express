@@ -2,6 +2,7 @@ import e from "express";
 import controller from "./controller.js";
 import validator from "./validator.js";
 import upload from "../../middleware/upload.js";
+import countingVisits from "../../middleware/blog.js";
 
 const router = e.Router();
 
@@ -14,7 +15,7 @@ router.post(
 );
 
 router.get("/", controller.getAllBlog);
-router.get("/:id", controller.getSingleBlog);
+router.get("/:id", countingVisits, controller.getSingleBlog);
 router.delete("/:id", controller.removeBlog);
 
 router.put(

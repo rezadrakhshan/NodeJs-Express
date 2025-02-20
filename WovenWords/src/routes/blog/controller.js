@@ -60,7 +60,7 @@ export default new (class extends parentController {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return this.response({ res, message: "Inavlid ID", code: 400 });
     }
-    const updateValue = _.pick(req.body, ["title", "content"]);
+    const updateValue = _.pick(req.body, ["title", "content", "status"]);
     const blog = await this.Blog.findById(req.params.id);
     if (req.file) {
       updateValue.image = `/uploads/${req.file.filename}`;

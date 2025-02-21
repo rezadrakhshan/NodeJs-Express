@@ -8,6 +8,7 @@ const blogSchema = new mongoose.Schema({
   image: { type: String, required: true },
   status: { type: Boolean, default: false },
   visits: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
+  comments: { type: [mongoose.Schema.Types.ObjectId], ref: "Comment" },
   slug: { type: String, required: true },
 });
 

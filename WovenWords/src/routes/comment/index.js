@@ -11,4 +11,6 @@ router.post(
   controller.createComment
 );
 
+router.delete("/:id", controller.removeComment);
+
 export default router;

@@ -37,7 +37,10 @@ export default new (class extends parentController {
     return this.response({ res, message: "Blog removed successfully" });
   }
   async getAllBlog(req, res) {
-    const blog = await this.Blog.find({ userId: req.user.id });
+    const blog = await this.Blog.find({ userId: req.user.id }).populate({
+      path: "userId",
+      select: "_id name",
+    });
     this.response({ res, data: blog });
   }
   async getSingleBlog(req, res) {

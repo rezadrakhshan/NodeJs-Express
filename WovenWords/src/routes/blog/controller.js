@@ -14,7 +14,7 @@ export default new (class extends parentController {
     const { title, content } = req.body;
     const userId = req.user.id;
     const slug = slugify(title, { lower: true });
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    const imagePath = req.file ? `/blog/${req.file.filename}` : null;
 
     const newBlog = new this.Blog({
       userId: userId,
@@ -48,9 +48,20 @@ export default new (class extends parentController {
   }
   async getSingleBlog(req, res) {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return this.response({ res, message: "Inavlid ID", code: 400 });
+      return this.response({
+        res,
+        message: "Inavlid ID",
+        code: 400,
+        populate: "userID",
+      });
     }
-    const blog = await this.Blog.findById(req.params.id);
+    const blog = await this.Blog.findById(req.params.id)
+      .populate({
+        path: "comments",
+        populate: { path: "userID", select: "name email _id" },
+        select: "_id userID content",
+      })
+      .populate({ path: "userId", select: "name email _id" });
     if (!blog) {
       return this.response({ res, message: "Blog not found", code: 404 });
     }
@@ -63,12 +74,12 @@ export default new (class extends parentController {
     const updateValue = _.pick(req.body, ["title", "content", "status"]);
     const blog = await this.Blog.findById(req.params.id);
     if (req.file) {
-      updateValue.image = `/uploads/${req.file.filename}`;
+      updateValue.image = `/blog/${req.file.filename}`;
       if (blog.image) {
         const oldImagePath = path.join(
           __dirname,
           "../../../public/blog",
-          blog.image.split("/uploads/")[1]
+          blog.image.split("/blog/")[1]
         );
         fs.unlink(oldImagePath, (err) => {
           if (err && err.code !== "ENOENT") {

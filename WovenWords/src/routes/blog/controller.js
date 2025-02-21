@@ -11,18 +11,12 @@ const __dirname = path.dirname(__filename);
 
 export default new (class extends parentController {
   async createBlog(req, res) {
-    const { title, content } = req.body;
-    const userId = req.user.id;
-    const slug = slugify(title, { lower: true });
-    const imagePath = req.file ? `/blog/${req.file.filename}` : null;
+    const data = _.pick(req.body, ["title", "content", "status"]);
+    data.image = req.file ? `/blog/${req.file.filename}` : null;
+    data.slug = slugify(data.title, { lower: true });
+    data.userId = req.user.id;
 
-    const newBlog = new this.Blog({
-      userId: userId,
-      title: title,
-      content: content,
-      image: imagePath,
-      slug: slug,
-    });
+    const newBlog = new this.Blog(data);
 
     await newBlog.save();
 

@@ -13,7 +13,7 @@ export default new (class extends parentController {
     }
     const comment = new this.Comment({
       postID: req.params.id,
-      userID: req.user.id,
+      userID: req.user._id,
       content: req.body.content,
     });
     await comment.save();

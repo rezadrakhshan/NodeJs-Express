@@ -14,7 +14,7 @@ export default new (class extends parentController {
     const data = _.pick(req.body, ["title", "content", "status"]);
     data.image = req.file ? `/blog/${req.file.filename}` : null;
     data.slug = slugify(data.title, { lower: true });
-    data.userId = req.user.id;
+    data.userId = req.user._id;
 
     const newBlog = new this.Blog(data);
 
@@ -37,7 +37,7 @@ export default new (class extends parentController {
     return this.response({ res, message: "Blog removed successfully" });
   }
   async getAllBlog(req, res) {
-    const blog = await this.Blog.find({ userId: req.user.id }).populate({
+    const blog = await this.Blog.find({ userId: req.user._id }).populate({
       path: "userId",
       select: "_id name",
     });

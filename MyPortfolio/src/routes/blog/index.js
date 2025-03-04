@@ -5,7 +5,7 @@ import upload from "../../middleware/upload.js";
 
 const app = e.Router();
 
-app.get(
+app.post(
   "/",
   upload.single("image"),
   validator.createBlogValidator(),

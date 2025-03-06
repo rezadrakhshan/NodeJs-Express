@@ -36,4 +36,14 @@ export default new (class extends parrentController {
     }
     return this.response({ res, message: "Blog found", data: blog });
   }
+  async removeBlog(req,res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return this.response({ res, message: "Inavlid ID", code: 400 });
+    }
+    const blog = await this.Blog.findByIdAndDelete(req.params.id);
+    if (!blog) {
+      return this.response({ res, message: "Blog does not exists", code: 404 });
+    }
+    return this.response({ res, message: "Blog removed" });
+  }
 })();

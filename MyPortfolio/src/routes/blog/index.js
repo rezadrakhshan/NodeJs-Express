@@ -13,8 +13,8 @@ app.post(
   controller.createBlog
 );
 
-
-app.get("/",controller.getAllBlog)
-app.get("/:id",controller.getSingleBlog)
+app.get("/", controller.getAllBlog);
+app.get("/:id", controller.getSingleBlog);
+app.delete("/:id", controller.removeBlog);
 
 export default app;

@@ -14,4 +14,14 @@ export default new (class {
       check("image").optional().isURL().withMessage("image must be valid url"),
     ];
   }
+  updateBlogValidator() {
+    return [
+      check("title").optional().isLength({ max: 100 }),
+      check("content").optional().isLength({ min: 50 }),
+      check("image")
+        .optional()
+        .isURL()
+        .withMessage("image must be a valid URL"),
+    ];
+  }
 })();

@@ -16,5 +16,12 @@ app.post(
 app.get("/", controller.getAllBlog);
 app.get("/:id", controller.getSingleBlog);
 app.delete("/:id", controller.removeBlog);
+app.put(
+  "/:id",
+  upload.single("image"),
+  validator.updateBlogValidator(),
+  controller.validate,
+  controller.updateBlog
+);
 
 export default app;

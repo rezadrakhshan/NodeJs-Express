@@ -1,5 +1,6 @@
 import winston from "winston";
-import log from "../index.js"
+import debug from "debug";
+const log = debug("app:main")
 
 export default function () {
   winston.add(new winston.transports.File({ filename: "errors.log" }));

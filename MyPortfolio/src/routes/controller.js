@@ -5,7 +5,7 @@ import Blog from "../models/blog.js";
 export default class {
   constructor() {
     autoBind(this);
-    this.Blog = Blog
+    this.Blog = Blog;
   }
   validationBody(req, res) {
     const result = validationResult(req);

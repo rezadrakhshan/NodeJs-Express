@@ -10,5 +10,6 @@ app.post(
   controller.validate,
   controller.createService
 );
+app.delete("/:id", controller.removeService);
 
 export default app;

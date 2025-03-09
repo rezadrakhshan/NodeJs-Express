@@ -11,5 +11,6 @@ app.post(
   controller.createService
 );
 app.delete("/:id", controller.removeService);
+app.put("/:id", controller.updateService);
 
 export default app;

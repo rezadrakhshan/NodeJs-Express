@@ -25,4 +25,25 @@ export default new (class extends parentController {
     }
     return this.response({ res, message: "Service removed" });
   }
+  async updateService(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      this.response({ res, message: "Invalid ID", code: 400 });
+    }
+    const data = _.pick(req.body, ["title", "description"]);
+    const service = await this.Service.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
+    if (!service) {
+      return this.response({
+        res,
+        message: "Service does not exists",
+        code: 404,
+      });
+    }
+    return this.response({
+      res,
+      message: "Service updated successfully",
+      data: service,
+    });
+  }
 })();

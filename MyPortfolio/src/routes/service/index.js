@@ -4,6 +4,7 @@ import validator from "./validator.js";
 
 const app = e.Router();
 
+app.get("/", controller.getAllService);
 app.post(
   "/",
   validator.createServiceValidator(),

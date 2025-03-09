@@ -3,6 +3,14 @@ import _ from "lodash";
 import mongoose from "mongoose";
 
 export default new (class extends parentController {
+  async getAllService(req, res) {
+    const services = await this.Service.find({});
+    return this.response({
+      res,
+      message: "All service is here",
+      data: services,
+    });
+  }
   async createService(req, res) {
     const data = _.pick(req.body, ["title", "description"]);
     const service = await new this.Service(data);

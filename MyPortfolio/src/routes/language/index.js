@@ -10,5 +10,6 @@ app.post(
   controller.validate,
   controller.createLang
 );
+app.delete("/:id", controller.removeLang);
 
 export default app;

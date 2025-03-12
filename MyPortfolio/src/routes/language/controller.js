@@ -46,4 +46,8 @@ export default new (class extends parentController {
     }
     return this.response({ res, message: "Language updated", data: lang });
   }
+  async getAllLang(req, res) {
+    const data = await this.Language.find({});
+    return this.response({ res, message: "All language is here", data: data });
+  }
 })();

@@ -29,4 +29,21 @@ export default new (class extends parentController {
     }
     return this.response({ res, message: "Language removed" });
   }
+  async updateLang(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return this.response({ res, message: "Invalid ID", code: 400 });
+    }
+    const data = _.pick(req.body, ["title", "nativeOrPercentage"]);
+    const lang = await this.Language.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
+    if (!lang) {
+      return this.response({
+        res,
+        message: "Language does not exists",
+        code: 404,
+      });
+    }
+    return this.response({ res, message: "Language updated", data: lang });
+  }
 })();

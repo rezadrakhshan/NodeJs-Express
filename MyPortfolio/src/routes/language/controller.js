@@ -34,17 +34,34 @@ export default new (class extends parentController {
       return this.response({ res, message: "Invalid ID", code: 400 });
     }
     const data = _.pick(req.body, ["title", "nativeOrPercentage"]);
-    const lang = await this.Language.findByIdAndUpdate(req.params.id, data, {
-      new: true,
-    });
-    if (!lang) {
-      return this.response({
-        res,
-        message: "Language does not exists",
-        code: 404,
-      });
+    if (data.nativeOrPercentage) {
+      if (
+        data.nativeOrPercentage === "بومی" ||
+        (typeof data.nativeOrPercentage === "string" &&
+          /^\d+(\.\d+)?%$/.test(data.nativeOrPercentage))
+      ) {
+        const lang = await this.Language.findByIdAndUpdate(
+          req.params.id,
+          data,
+          {
+            new: true,
+          }
+        );
+        if (!lang) {
+          return this.response({
+            res,
+            message: "Language does not exists",
+            code: 404,
+          });
+        }
+        return this.response({ res, message: "Language updated", data: lang });
+      }
     }
-    return this.response({ res, message: "Language updated", data: lang });
+    return this.response({
+      res,
+      message: `${data.nativeOrPercentage} is not a valid value for 'nativeOrPercentage'. It must be either "بومی" or a percentage.`,
+      code: 400,
+    });
   }
   async getAllLang(req, res) {
     const data = await this.Language.find({});

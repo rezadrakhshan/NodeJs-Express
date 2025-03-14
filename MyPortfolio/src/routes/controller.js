@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import Blog from "../models/blog.js";
 import Service from "../models/service.js";
 import Language from "../models/language.js";
+import Skill from "../models/skill.js";
 
 export default class {
   constructor() {
@@ -10,6 +11,7 @@ export default class {
     this.Blog = Blog;
     this.Service = Service;
     this.Language = Language;
+    this.Skill = Skill;
   }
   validationBody(req, res) {
     const result = validationResult(req);

@@ -15,4 +15,6 @@ app.post(
 
 app.delete("/:id", controller.removeskill);
 
+app.put("/:id", controller.updateSkill);
+
 export default app;

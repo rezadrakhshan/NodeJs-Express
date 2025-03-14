@@ -8,14 +8,10 @@ export default new (class extends parentController {
     return this.response({ res, message: "All skill is here", data: skills });
   }
   async createSkill(req, res) {
-    try {
-      const data = _.pick(req.body, ["title", "percentage"]);
-      const result = await new this.Skill(data);
-      await result.save();
-      return this.response({ res, messgae: "Skill created", data: result });
-    } catch (error) {
-      return this.response({ res, message: error.message, code: 400 });
-    }
+    const data = _.pick(req.body, ["title", "percentage"]);
+    const result = await new this.Skill(data);
+    await result.save();
+    return this.response({ res, messgae: "Skill created", data: result });
   }
   async removeskill(req, res) {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -32,5 +28,26 @@ export default new (class extends parentController {
       });
     }
     return this.response({ res, message: "Skill removed" });
+  }
+  async updateSkill(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return this.response({ res, message: "Invalid ID", code: 400 });
+    }
+    const data = _.pick(req.body, ["title", "percentage"]);
+    const result = await this.Skill.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+    });
+    if (!result) {
+      return this.response({
+        res,
+        message: "Skill does not exists",
+        code: 404,
+      });
+    }
+    return this.response({
+      res,
+      message: "Skill successfully updated",
+      data: result,
+    });
   }
 })();

@@ -4,6 +4,7 @@ import Blog from "../models/blog.js";
 import Service from "../models/service.js";
 import Language from "../models/language.js";
 import Skill from "../models/skill.js";
+import Testimonial from "../models/testimonial.js";
 
 export default class {
   constructor() {
@@ -12,6 +13,7 @@ export default class {
     this.Service = Service;
     this.Language = Language;
     this.Skill = Skill;
+    this.Testimonial = Testimonial;
   }
   validationBody(req, res) {
     const result = validationResult(req);

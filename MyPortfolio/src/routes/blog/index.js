@@ -1,13 +1,13 @@
 import e from "express";
 import controller from "./controller.js";
 import validator from "./validator.js";
-import upload from "../../middleware/upload.js";
+import { uploadBlog } from "../../middleware/upload.js";
 
 const app = e.Router();
 
 app.post(
   "/",
-  upload.single("image"),
+  uploadBlog.single("image"),
   validator.createBlogValidator(),
   controller.validate,
   controller.createBlog
@@ -18,7 +18,7 @@ app.get("/:id", controller.getSingleBlog);
 app.delete("/:id", controller.removeBlog);
 app.put(
   "/:id",
-  upload.single("image"),
+  uploadBlog.single("image"),
   validator.updateBlogValidator(),
   controller.validate,
   controller.updateBlog

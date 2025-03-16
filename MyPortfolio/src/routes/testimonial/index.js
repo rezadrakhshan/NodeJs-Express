@@ -1,16 +1,20 @@
 import e from "express";
 import controller from "./controller.js";
 import validator from "./validator.js";
-import upload from "../../middleware/upload.js";
+import { uploadTestimonial } from "../../middleware/upload.js";
 
 const app = e.Router();
 
 app.post(
   "/",
-  upload.single("image"),
+  uploadTestimonial.single("image"),
   validator.createTestimonialValidator(),
   controller.validate,
   controller.createTestimonial
 );
+
+app.get("/", controller.getAllTestimonial);
+
+app.delete("/:id", controller.removeTestimonial);
 
 export default app;

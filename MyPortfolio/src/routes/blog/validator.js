@@ -8,9 +8,9 @@ export default new (class {
         .isLength({ max: 100 })
         .withMessage("title can not be empty"),
       check("content")
-        .notEmpty()
+        .notEmpty().withMessage("content can not be empty")
         .isLength({ min: 50 })
-        .withMessage("content can not be empty"),
+        .withMessage("content must be more than 50 character"),
       check("image").optional().isURL().withMessage("image must be valid url"),
     ];
   }

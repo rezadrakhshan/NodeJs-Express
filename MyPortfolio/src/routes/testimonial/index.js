@@ -17,4 +17,10 @@ app.get("/", controller.getAllTestimonial);
 
 app.delete("/:id", controller.removeTestimonial);
 
+app.put(
+  "/:id",
+  uploadTestimonial.single("image"),
+  controller.updateTestimonial
+);
+
 export default app;

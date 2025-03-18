@@ -1,10 +1,17 @@
 import parentController from "../controller.js";
 import _ from "lodash";
 import mongoose from "mongoose";
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default new (class extends parentController {
   async createEducation(req, res) {
     const data = _.pick(req.body, ["title", "description", "timeLine"]);
+    data.certificate = req.file ? `/education/${req.file.filename}` : null;
     const result = await new this.Education(data);
     await result.save();
     return this.response({
@@ -27,6 +34,16 @@ export default new (class extends parentController {
         code: 404,
       });
     }
+    const oldCertificatePath = path.join(
+      __dirname,
+      "../../../public/education",
+      result.certificate.split("/education/")[1]
+    );
+    fs.unlink(oldCertificatePath, (err) => {
+      if (err && err.code !== "ENOENT") {
+        console.error("Error deleting old certificate:", err);
+      }
+    });
     return this.response({ res, message: "Education removed" });
   }
   async getAllEducation(req, res) {
@@ -51,6 +68,22 @@ export default new (class extends parentController {
         message: "Education does not exists",
         code: 404,
       });
+    }
+    if (req.file) {
+      if (result.certificate) {
+        const oldCertificatePath = path.join(
+          __dirname,
+          "../../../public/education",
+          result.certificate.split("/education/")[1]
+        );
+        fs.unlink(oldCertificatePath, (err) => {
+          if (err && err.code !== "ENOENT") {
+            console.error("Error deleting old certificate:", err);
+          }
+        });
+      }
+      result.certificate = `/education/${req.file.filename}`;
+      await result.save();
     }
     return this.response({ res, message: "Education updated", data: result });
   }

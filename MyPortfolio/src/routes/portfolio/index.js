@@ -13,4 +13,8 @@ app.post(
   controller.createPortfolio
 );
 
+app.get("/", controller.getPortfolio);
+
+app.delete("/:id", controller.deletePortfolio);
+
 export default app;

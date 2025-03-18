@@ -10,7 +10,12 @@ const __dirname = path.dirname(__filename);
 
 export default new (class extends parentController {
   async createEducation(req, res) {
-    const data = _.pick(req.body, ["title", "description", "timeLine"]);
+    const data = _.pick(req.body, [
+      "title",
+      "description",
+      "timeLine",
+      "isWork",
+    ]);
     data.certificate = req.file ? `/education/${req.file.filename}` : null;
     const result = await new this.Education(data);
     await result.save();
@@ -47,7 +52,7 @@ export default new (class extends parentController {
     return this.response({ res, message: "Education removed" });
   }
   async getAllEducation(req, res) {
-    const result = await this.Education.find({});
+    const result = await this.Education.find({ isWork: false });
     return this.response({
       res,
       message: "All education is here",
@@ -58,7 +63,12 @@ export default new (class extends parentController {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return this.response({ res, message: "Invalid ID", code: 400 });
     }
-    const data = _.pick(req.body, ["title", "description", "timeLine"]);
+    const data = _.pick(req.body, [
+      "title",
+      "description",
+      "timeLine",
+      "isWork",
+    ]);
     const result = await this.Education.findByIdAndUpdate(req.params.id, data, {
       new: true,
     });
@@ -86,5 +96,9 @@ export default new (class extends parentController {
       await result.save();
     }
     return this.response({ res, message: "Education updated", data: result });
+  }
+  async getAllWork(req, res) {
+    const result = await this.Education.find({ isWork: true });
+    return this.response({ res, message: "All work is here", data: result });
   }
 })();

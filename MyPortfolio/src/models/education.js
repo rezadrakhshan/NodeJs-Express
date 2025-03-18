@@ -6,6 +6,7 @@ const educationSchema = new mongoose.Schema({
   description: { type: String, required: true },
   timeLine: { type: String, required: true },
   certificate: { type: String },
+  isWork: { type: String, default: false },
 });
 
 educationSchema.plugin(timestampsPlugin);

@@ -25,4 +25,6 @@ app.put(
   controller.updateEducation
 );
 
+app.get("/works",controller.getAllWork)
+
 export default app;

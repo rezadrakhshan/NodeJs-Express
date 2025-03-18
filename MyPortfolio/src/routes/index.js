@@ -6,6 +6,7 @@ import langRouter from "./language/index.js";
 import skillRouter from "./skill/index.js";
 import testimonialRouter from "./testimonial/index.js";
 import educationRouter from "./educations/index.js";
+import portfolioRouter from "./portfolio/index.js";
 
 const router = e.Router();
 
@@ -16,5 +17,5 @@ router.use("/language", langRouter);
 router.use("/skill", skillRouter);
 router.use("/testimonial", testimonialRouter);
 router.use("/education", educationRouter);
-
+router.use("/portfolio", portfolioRouter);
 export default router;

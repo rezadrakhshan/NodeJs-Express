@@ -9,7 +9,7 @@ import educationRouter from "./educations/index.js";
 import portfolioRouter from "./portfolio/index.js";
 
 const router = e.Router();
-
+ 
 router.use("/blog", blogRouter);
 router.use("/service", serviceRouter);
 router.use("/contact", contactRouter);

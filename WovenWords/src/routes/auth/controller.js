@@ -2,7 +2,6 @@ import parentController from "../controller.js";
 import _ from "lodash";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import c from "config";
 
 export default new (class extends parentController {
   async register(req, res) {
@@ -41,7 +40,7 @@ export default new (class extends parentController {
         code: 400,
       });
     }
-    const token = jwt.sign({ _id: user.id }, c.get("jwt_secret"));
+    const token = jwt.sign({ _id: user.id }, process.env.JWT_SECRET);
     return this.response({
       res,
       message: "Successfully logged in.",

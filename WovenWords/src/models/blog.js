@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import timestampsPlugin from "mongoose-timestamp";
 
 const blogSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -10,9 +9,8 @@ const blogSchema = new mongoose.Schema({
   visits: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
   comments: { type: [mongoose.Schema.Types.ObjectId], ref: "Comment" },
   slug: { type: String, required: true },
-});
+}, { timestamps: true });
 
-blogSchema.plugin(timestampsPlugin);
 
 const Blog = mongoose.model("Blog", blogSchema);
 

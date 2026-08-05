@@ -6,13 +6,51 @@ const router = e.Router();
 
 /**
  * @swagger
- * /comment/:id:
+ * components:
+ *   schemas:
+ *     CreateCommentRequest:
+ *       type: object
+ *       required:
+ *         - content
+ *       properties:
+ *         content:
+ *           type: string
+ *           minLength: 10
+ *           maxLength: 300
+ *           example: This is a great article. Thanks for sharing!
+ */
+
+/**
+ * @swagger
+ * /comment/{id}:
  *   post:
- *     tags: [Comment]
+ *     tags:
+ *       - Comment
  *     summary: Create Comment
+ *     description: Create a new comment for a blog.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Blog ID
+ *         schema:
+ *           type: string
+ *         example: 6890b6b9df4dff8f7f52b7f2
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateCommentRequest'
  *     responses:
- *       200:
- *         description: success created
+ *       201:
+ *         description: Comment created successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Blog not found
+ *       500:
+ *         description: Internal server error
  */
 router.post(
   "/:id",
@@ -21,16 +59,29 @@ router.post(
   controller.createComment
 );
 
-
 /**
  * @swagger
- * /comment/:id:
+ * /comment/{id}:
  *   delete:
- *     tags: [Comment]
+ *     tags:
+ *       - Comment
  *     summary: Remove Comment
+ *     description: Delete a comment by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Comment ID
+ *         schema:
+ *           type: string
+ *         example: 6890b6b9df4dff8f7f52b7f2
  *     responses:
  *       200:
- *         description: success removed
+ *         description: Comment removed successfully
+ *       404:
+ *         description: Comment not found
+ *       500:
+ *         description: Internal server error
  */
 router.delete("/:id", controller.removeComment);
 

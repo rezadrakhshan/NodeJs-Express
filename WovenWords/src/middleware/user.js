@@ -1,6 +1,5 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
-import c from "config";
 import _ from "lodash";
 
 export async function isLoggedIn(req, res, next) {
@@ -9,7 +8,7 @@ export async function isLoggedIn(req, res, next) {
     res.status(401).send("access denied");
   }
   try {
-    const decoded = jwt.verify(token, c.get("jwt_secret"));
+    const decoded = jwt.verify(token, proccess.env.JWT_SECRET);
     const user = await User.findById(decoded._id);
     req.user = _.pick(user, ["_id", "email", "name", "isAdmin"]);
     next();
